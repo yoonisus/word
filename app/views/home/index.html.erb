@@ -1,0 +1,34 @@
+
+<div class="container">
+    <form style="margin-top:40px" action="/home/write" method="POST">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Title</label>
+        <input type="text" name="title" class="form-control" id="exampleInputEmail1" placeholder="Title">
+      </div>
+      <textarea class="form-control" rows="5" id="content" name="content"></textarea>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+    <% @posts.each do |p| %>
+      <div class="well">
+       <span style="font-weight:bold">
+        <%= p.title %><br></span>
+        <%= p.content %>
+    <p>모든 글자 수: <%=p.content.length-1%></p> 
+
+    <p>(공백 제외) 글자 수: <%=p.content.length - p.content.count(' ')%> </p> 
+
+    <p>단어 갯 수: <%=p.content.split(' ').length%></p> 
+    <% p.replies.each do |r| %>
+   <p><%= r.content %></p>
+      </div>
+   <% end %>
+   <div>
+    <form style="margin-top:40px;" action="/home/reply_write" method="POST">
+      <input type= "hidden" value="<%= p.id %>" name="id_of_post">
+      <textarea class="form-control" rows="5" id="content" name="content"></textarea>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+  </div>
+</div> 
+  <% end %>
+
